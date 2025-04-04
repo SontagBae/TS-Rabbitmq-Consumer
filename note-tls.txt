@@ -1,0 +1,63 @@
+That error you're seeing:
+
+vbnet
+Copy
+Edit
+Error: error:0308010C:digital envelope routines::unsupported
+...is related to Node.js v17+ using OpenSSL 3, which changes how cryptographic algorithms are handled—causing compatibility issues with some npm packages or Webpack-based projects.
+
+✅ Solutions
+🛠 Option 1: Set Legacy OpenSSL Env Variable (Quick Fix)
+Run this before your npm start, npm install, or other commands:
+
+bash
+Copy
+Edit
+export NODE_OPTIONS=--openssl-legacy-provider
+If you're on Windows CMD:
+
+cmd
+Copy
+Edit
+set NODE_OPTIONS=--openssl-legacy-provider
+On PowerShell:
+
+powershell
+Copy
+Edit
+$env:NODE_OPTIONS="--openssl-legacy-provider"
+To make it permanent, add it to your .bashrc, .zshrc, or shell config file:
+
+bash
+Copy
+Edit
+echo 'export NODE_OPTIONS=--openssl-legacy-provider' >> ~/.zshrc
+source ~/.zshrc
+🛠 Option 2: Downgrade Node to LTS v16
+Most packages are still best supported on Node.js 16.
+
+You can downgrade using [nvm (Node Version Manager)]:
+
+bash
+Copy
+Edit
+nvm install 16
+nvm use 16
+Check version:
+
+bash
+Copy
+Edit
+node -v
+🛠 Option 3: Upgrade Your Package (if available)
+Some packages (especially Webpack) released patches to support OpenSSL 3. You can try:
+
+bash
+Copy
+Edit
+npm update
+And ensure your webpack or related packages are up to date in package.json.
+
+💡 Why This Happens
+Node 17+ switched to OpenSSL 3, which disables some older crypto algorithms used by older dependencies (especially Webpack 4 or less). Unless your dependencies are updated to support the new OpenSSL API, you'll hit this error.
+

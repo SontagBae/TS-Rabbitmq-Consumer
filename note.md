@@ -1,5 +1,7 @@
 If you're having trouble committing changes in GitHub Codespaces, follow these steps to troubleshoot and resolve the issue:
 
+
+
 1. Check Git Status
 Open the terminal in your Codespace and run:
 
